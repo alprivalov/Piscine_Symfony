@@ -1,0 +1,1 @@
+sudo mount -t vboxsf -o uid=$(id -u),gid=$(id -g) Piscine_Symfony /home/alprival/Piscine_Symfony
