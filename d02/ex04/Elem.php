@@ -43,73 +43,73 @@
             array_push($this->elem,$element);
         }
         
-        public function meta(){
+        private function meta(){
             return("meta" . $this->content);
         }
-        public function img(){
+        private function img(){
             return("img");
         }
-        public function hr(){
+        private function hr(){
             return("hr");
         }
-        public function br(){
+        private function br(){
             return("br");
         }
-        public function head(){
+        private function head(){
             return("head");
         }
-        public function body(){
+        private function body(){
             return("body");
         }
-        public function title(){
+        private function title(){
             return("title");
         }
-        public function h1(){
+        private function h1(){
             return("h1");
         }
-        public function h2(){
+        private function h2(){
             return("h2");
         }
-        public function h3(){
+        private function h3(){
             return("h3");
         }
-        public function h4(){
+        private function h4(){
             return("h4");
         }
-        public function h5(){
+        private function h5(){
             return("h5");
         }
-        public function h6(){
+        private function h6(){
             return("h6");
         }
-        public function p(){
+        private function p(){
             return("p");
         }
-        public function span(){
+        private function span(){
             return("span");
         }
-        public function div(){
+        private function div(){
             return("div");
         }
-        public function html(){
+        private function html(){
             return("html");
         } 
-        public function th(){
+        private function th(){
             return("th");
         } 
-        public function tr(){
+        private function tr(){
             return("tr");
         } 
-        public function td(){
+        private function td(){
             return("td");
         } 
-        public function ul(){
+        private function ul(){
             return("ul");
         } 
-        public function ol(){
+        private function ol(){
             return("ol");
         } 
-        public function li(){
+        private function li(){
             return("li");
         } 
     }

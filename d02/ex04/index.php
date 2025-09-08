@@ -14,7 +14,6 @@
     $elem_d2400 = new Elem("h2","salut");
     $elem_d3000 = new Elem("meta");
     $elem_d3300 = new Elem("p","bonjour");
-    $elem_d4000 = new Elem("error");
 
 
     $elem_d0000->pushElement($elem_d1000);
@@ -33,7 +32,6 @@
     $elem_d0000->pushElement($elem_d3000);
     $elem_d3000->pushElement($elem_d3300);
 
-    $elem_d0000->pushElement($elem_d4000);
 
     $elem_d0000->getHTML();
 ?>
