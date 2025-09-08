@@ -37,20 +37,6 @@ function expectValid(Elem $doc, bool $expected, string $msg = '') {
     }
 }
 
-/**
- * Helper: create a <meta charset="UTF-8"> element
- * (adjust this if your Elem class uses a different API for attributes).
- */
-function makeMetaCharset(): Elem {
-    $meta = new Elem('meta');
-    if (method_exists($meta, 'setAttribute')) {
-        $meta->setAttribute('charset', 'UTF-8');
-    } elseif (method_exists($meta, 'attr')) {
-        $meta->attr('charset', 'UTF-8');
-    }
-    return $meta;
-}
-
 /* ========= Rule 1: <html> must contain exactly one <head> followed by one <body> ========= */
 
 run('R1-OK: html = [head, body] (exactly)', function () {
