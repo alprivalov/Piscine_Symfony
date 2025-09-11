@@ -1,0 +1,11 @@
+
+{% extends 'base.html.twig' %}
+
+{% block content %}
+  <h2>Bienvenue sur la page principale</h2>
+  <ul>
+    <li><a href="{{ path('article', {article: 'gull'}) }}">Article Gull</a></li>
+    <li><a href="{{ path('article', {article: 'cat'}) }}">Article Cat</a></li>
+    <li><a href="{{ path('article', {article: 'tree'}) }}">Article Tree</a></li>
+  </ul>
+{% endblock %}
