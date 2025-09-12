@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+  <h2>Formulaire avec Form Component</h2>
+  {% for label, messages in app.flashes(['message']) %}
+    {% for message in messages %}
+      <p> {{message}} <p>
+    {% endfor %}
+  {% endfor %}
+  {{ form_start(form,{action: path('create'),method:'POST'}) }}
+    {{ form_row(form.username) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.enable) }}
+    {{ form_row(form.birthdate) }}
+    {{ form_row(form.address) }}
+    <button type="submit">Envoyer</button>
+  {{ form_end(form) }}
+
+{% endblock %}

@@ -1,0 +1,4 @@
+# config/packages/doctrine.yaml
+doctrine:
+    dbal:
+        url: '%env(resolve:DATABASE_URL)%'
