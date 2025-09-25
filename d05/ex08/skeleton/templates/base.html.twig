@@ -1,0 +1,28 @@
+<html>
+  <body>
+    <header></header>
+
+
+    {% for label,messages in app.flashes(['success','error'])%}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %} 
+    <ul>
+        <li> <a href="/bank_accounts/table"> create bank_accounts table </a> </li>
+        <li> <a href="/addresses/table"> create addresses table </a> </li>
+        <li> <a href="/persons/table"> create persons table </a> </li>
+        <li> <a href="/persons"> create persons </a> </li> 
+        <li> <a href="/persons/show"> show table </a> </li> 
+        <li> <a href="/persons/alternate"> alternate table </a> </li> 
+    </ul>
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer></footer>
+  </body>
+</html>

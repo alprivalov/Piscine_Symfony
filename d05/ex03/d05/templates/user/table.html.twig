@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('message') %}
+        <a>{{message}}</a>
+    {% endfor %}
+
+    <table> 
+        <tr>
+            {% for head in header %}
+                <th>{{head}}</th>
+            {% endfor %}
+        </tr>
+        {% for row in rows %}
+            <tr>
+                <td style="font-size:7px;">{{row.name}}</td>
+                <td style="font-size:7px;">{{row.username}}</td>
+                <td style="font-size:7px;">{{row.email}}</td>
+                <td style="font-size:7px;">{{row.enable}}</td>
+                <td>{{ row.birthdate ? row.birthdate|date('Y-m-d') : '' }}</td>
+                <td style="font-size:7px;">{{row.address}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

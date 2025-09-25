@@ -24,9 +24,9 @@ class SecondController extends AbstractController {
 
         try {
             $connection->executeStatement($sql);
-            $message = '✅ Table created (or already exists)';
+            $message = 'Table created (or already exists)';
         } catch (\Exception $e) {
-            $message = '❌ Error: ' . $e->getMessage();
+            $message = 'Error: ' . $e->getMessage();
             return $this->render('e00/e00.error.html.twig',['error'=>$e->getMessage()]);
         }
         return $this->render('e00/e00.success.html.twig');

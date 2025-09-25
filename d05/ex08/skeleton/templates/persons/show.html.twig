@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block content %}
+    {% for label, messages in app.flashes(['success', 'error']) %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <table>
+        <tr>
+            {% for header in headers %}
+                <th>{{header}}</th>
+            {% endfor %}
+        </tr>
+        {% for person in persons %}
+            <tr>
+                <td style="font-size:7px;">{{person.id}}</td>
+                <td style="font-size:7px;">{{person.username}}</td>
+                <td style="font-size:7px;">{{person.name}}</td>
+                <td style="font-size:7px;">{{person.email}}</td>
+                <td style="font-size:7px;">{{person.enable}}</td>
+                <td style="font-size:7px;">{{person.birthdate|date('Y-m-d')}}</td>
+                <td> <a href={{ path('bank_accounts_create',{id : person.id} )}} class="" style="font-size:7px;"> create bank_accounts <a></td>
+                <td> <a href={{ path('addresses_create',{id : person.id} )}} style="font-size:7px;"> create addresses <a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
