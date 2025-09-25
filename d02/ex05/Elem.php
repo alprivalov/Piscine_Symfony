@@ -20,7 +20,7 @@
                 // force body after head in html
                 if(isset($this->allowedBalise["head"]) && $this->allowedBalise["head"] === 1 && $child->balise === "body")
                     throw new MyException();
-                // 
+                
                 if(!isset($this->allowedBalise[$child->balise]) || $this->allowedBalise[$child->balise] == 0)
                     throw new MyException();
                 $this->allowedBalise[$child->balise]--;

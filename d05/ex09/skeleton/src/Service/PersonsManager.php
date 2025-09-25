@@ -1,41 +1,44 @@
-<?php
+<?php 
+?><?php
 namespace App\Service;
 
 use App\Entity\Persons;
+use Doctrine\DBAL\Connection;
+use Doctrine\Migrations\MigratorConfiguration;
+use Doctrine\Migrations\DependencyFactory;
+use Doctrine\Migrations\Version\Version;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 
 class PersonsManager{
-
+    private DependencyFactory $dependencyFactory;
     private EntityManagerInterface $em;
-    public function __construct(EntityManagerInterface $em){
+    private Connection $connection;
+    public function __construct(DependencyFactory $dependencyFactory, EntityManagerInterface $em, Connection $connection){
+        $this->dependencyFactory = $dependencyFactory;
         $this->em = $em;
+        $this->connection = $connection;
     }
+
     public function getTable(){
 
         $meta = $this->em->getClassMetadata(Persons::class);
         $headers = $meta->getFieldNames();
         $repos = [];
         try{
-            $repos = $this->em->getRepository(Persons::class)->findAll();
+               
+            $sql =  "SELECT * FROM persons";
+            $repos = $this->connection->fetchAllAssociative($sql);
         }catch(\Exception $e){
             return [];
         }
         return [$repos,$headers];
     }
-    public function createPersons(Persons $persons){
+    public function createPersons(array $persons){
         try{
-            if($this->em->getRepository(Persons::class)->findOneBy([
-                "email" => $persons->getEmail(),
-                ]))
-                return false;
+            $persons['birthdate'] = $persons['birthdate']->format('Y-m-d');
 
-            if($this->em->getRepository(Persons::class)->findOneBy([
-                "username" => $persons->getUsername(),
-                ]))
-                return false;
-            $this->em->persist($persons);
-            $this->em->flush();
+            $this->connection->insert("Persons",$persons);
             return true;
         } catch(\Exception $e){
             return false;
@@ -52,12 +55,35 @@ class PersonsManager{
 
     public function createTable(){
         try{
-
-            $metadata =[ $this->em->getClassMetadata(Persons::class)];
-
-            $schematool = new SchemaTool($this->em);
+            $config = new MigratorConfiguration();
+            $config->setDryRun(false);
             
-            $schematool->createSchema($metadata);
+            $version = new Version('DoctrineMigrations\\Version20250925114716');
+            $plan = $this->dependencyFactory->getMigrationPlanCalculator()
+                ->getPlanUntilVersion( $version);
+
+            $this->dependencyFactory->getMigrator()
+                ->migrate($plan,$config);
+
+            return true;
+        } catch(\Exception $e){
+            return false;
+        }
+    }
+
+
+    public function alternate(){
+        try{
+            $config = new MigratorConfiguration();
+            
+            $version = new Version('DoctrineMigrations\\Version20250925114819');
+            $plan = $this->dependencyFactory
+                ->getMigrationPlanCalculator()
+                ->getPlanUntilVersion( $version);
+
+            $this->dependencyFactory->getMigrator()
+                ->migrate($plan,$config);
+
             return true;
         } catch(\Exception $e){
             return false;

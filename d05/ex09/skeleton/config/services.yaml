@@ -6,6 +6,8 @@
 parameters:
 
 services:
+    Doctrine\Migrations\DependencyFactory:
+        alias: 'doctrine.migrations.dependency_factory'
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
