@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PostController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    {% if app.user %}
+        <form id="post-form" action="{{ path('app_post_new') }}">
+            <input type="text" name="title">
+            <input type="text" name="content">
+            <input type="submit" value="create">
+        </form>
+    {% else %}
+        {% include 'user/login.html.twig' %}
+    {% endif %}
+
+    <ul id="posts">
+        {% for post in posts %}
+            <li id="li_{{ post.getId() }}">
+                <a href="#" class="post-view" id="{{ post.getId() }}"> {{ post.getTitle() }} </a>
+                {{ post.getCreated | date('Y-m-d')}}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        const appUser = {{ app.user ? 'true' : 'false' }};
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            document.getElementById('posts').addEventListener('click', async (e) => {
+                if(e.target.classList.contains('post-view')){
+                    e.preventDefault();
+                    const id = e.target.id;
+                    const response = await fetch(`/view/${id}`);
+                    const json = await response.json();
+                    const postLi = document.getElementById(`li_${id}`);
+                    const detail = json.details;
+                    const existing = postLi.querySelector('.post-details');
+                    if(existing) existing.remove();
+
+                    const details = document.createElement('div');
+                    details.classList.add('post-details');
+                    details.innerHTML = `
+                        <p>${detail.id} ${detail.title} ${detail.content} ${detail.created}</p>
+
+                    `;
+
+                    if(appUser) {
+                        details.innerHTML += `
+                            <a href="#" class="post-delete" data-id="${detail.id}">delete</a>
+                        `
+                    }
+                    postLi.appendChild(details);
+                }
+
+                if(e.target.classList.contains('post-delete')){
+                    e.preventDefault();
+                    const id = e.target.dataset.id;
+                    if(!confirm('Want to delete?')) return;
+
+                    const response = await fetch(`/delete/${id}`, { method: 'POST' });
+                    const json = await response.json();
+                    if(json.success){
+                        const li = document.getElementById(`li_${id}`);
+                        li.remove();
+                    } else {
+                        alert(json.message);
+                    }
+                }
+            });
+
+        });
+
+        const postForm = document.getElementById('post-form');
+        if(postForm){
+            postForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const form = e.target;
+                fetch(form.action,{
+                    method:'POST',
+                    body:new FormData(form)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        if(!data.success){
+                            alert(data.message);
+                            return ;
+                        }
+                        const postList = document.getElementById('posts');
+                        const post = document.createElement('li');
+                        post.textContent += `${ data.post.title } ${ data.post.created }`
+                        postList.appendChild(post);
+                        form.reset();
+                    })
+                })
+        }
+    </script>
+</div>
+{% endblock %}
