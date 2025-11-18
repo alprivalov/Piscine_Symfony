@@ -12,7 +12,11 @@
         }
 
         function readData(){
-            return $this->text;
+            $result = [];
+            foreach($this->text as $value){
+                array_push($result,"<p>".$value."</p>");
+            }
+            return $result;
         }
     }
 ?>

@@ -30,6 +30,7 @@
             if($nextPosition  == 0)
                 $y++;
         }
+        
         for($i =0 ; $i < count($array); $i++){
             fwrite($file_html,"\t<tr>\n");
 
