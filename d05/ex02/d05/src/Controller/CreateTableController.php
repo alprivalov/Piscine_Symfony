@@ -25,8 +25,12 @@ final class CreateTableController extends AbstractController
             )
         ';
 
-        $connection->executeQuery($sql);
-
-        return new Response('Table "users" created successfully (if it did not exist).');
+        try{
+            $connection->executeQuery($sql);
+            $this->addFlash( 'success','Success : user table create');
+        } catch(\Exception $e){
+            $this->addFlash( 'error','Error : user table create');
+        }
+        return $this->redirectToRoute('app_e02',);
     }
 }

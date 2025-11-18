@@ -10,9 +10,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 final class E02Controller extends AbstractController
 {
-    #[Route('/e02', name: 'app_e02', methods: ['GET'])]
-    public function index(Request $request): Response
-    {
+    #[Route('e02',name:'e02_main')]
+    public function user() {
+        return $this->render('base.html.twig');
+    }
+
+    #[Route('/e02/form', name: 'create')]
+    public function handleForm(Request $request,UserManager $userManager): Response{
         $session = $request->getSession();
         $defaultData = $session->get('form_data',[
             'username'=>'',
@@ -22,25 +26,20 @@ final class E02Controller extends AbstractController
             'birthdate'=> new \DateTime(),
             'address'=>'',
         ]);
-    
-        $form = $this->createForm(UserType::class,$defaultData);
-        
-        return $this->render('e02/e02.html.twig',[
-            'error' => null,
-            'form' => $form->createView(),
-        ]);
-    }
 
-    #[Route('/e02/create', name: 'create', methods: ['POST'])]
-    public function handleForm(Request $request,UserManager $userManager): Response{
-        $form = $this->createForm(UserType::class);
+        $form = $this->createForm(UserType::class,$defaultData);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $this->addFlash('message', $userManager->createUser($data));
-            return $this->redirectToRoute('app_e02');
+            try{
+                $data = $form->getData();
+                $userManager->createUser($data);
+                $this->addFlash( 'success','Success : user created');
+                return $this->redirectToRoute('e02_main');
+            } catch(\Exception $e){
+                $this->addFlash( 'error','Error : user create');
+            }
         }
 
         return $this->render('e02/e02.html.twig', [

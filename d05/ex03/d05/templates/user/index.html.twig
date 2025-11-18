@@ -3,12 +3,8 @@
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
-    {% for message in app.flashes('message') %}
-        <a>{{message}}</a>
-    {% endfor %}
-    {{form_start(form,{action: path('create_form'), method:'POST'})}}
 
-
+    {{form_start(form)}}
     {{ form_row(form.username) }}
     {{ form_row(form.name) }}
     {{ form_row(form.email) }}

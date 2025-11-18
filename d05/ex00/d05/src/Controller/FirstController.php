@@ -9,7 +9,7 @@ use Doctrine\DBAL\Connection;
 class FirstController extends AbstractController {
 
     #[Route('e00',name:'e00_main')]
-    public function tesT(Connection $connection) {
+    public function user(Connection $connection) {
         return $this->render('base.html.twig');
     }
 }

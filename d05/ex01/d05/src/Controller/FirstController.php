@@ -8,8 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\DBAL\Connection;
 class FirstController extends AbstractController {
 
-    #[Route('e00',name:'e00_main')]
-    public function tesT(Connection $connection) {
+    #[Route('e01',name:'e01_main')]
+    public function user(Connection $connection) {
         return $this->render('base.html.twig');
     }
 }

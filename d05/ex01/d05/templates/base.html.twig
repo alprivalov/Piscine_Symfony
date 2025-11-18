@@ -1,7 +1,13 @@
-<form method="POST" action="{{path('e04_main')}}">
-    
-    <button>
-        click
-    </button>
+<form method="POST" action="{{path('e01_create')}}">
+    {% for label,messages in app.flashes(['success','error'])%}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <ul>
+        <li> <a href="{{ path("e01_create") }}"> create user table </a> </li>
+    </ul>
 
 </form>

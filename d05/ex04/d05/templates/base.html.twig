@@ -19,10 +19,11 @@
             {% endfor %}
         {% endfor %}
         <ul>
-            <li> <a href="{{ path("table_create_form") }}"> create user table </a> </li>
-            <li> <a href="{{ path("form") }}"> create user  </a> </li>
-            <li> <a href="{{ path("show_form") }}"> show users </a> </li>
+            <li> <a href="{{ path("app_create_table") }}"> create user table </a> </li>
+            <li> <a href="{{ path("app_user") }}"> create user  </a> </li>
+            <li> <a href="{{ path("show_user") }}"> show users </a> </li>
         </ul>
         {% block body %}{% endblock %}
     </body>
 </html>
+

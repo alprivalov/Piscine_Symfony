@@ -1,7 +1,16 @@
 <html>
   <body>
     <header>Mon Header</header>
-
+    {% for label,messages in app.flashes(['success','error'])%}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <ul>
+        <li> <a href="{{ path("create") }}"> create user </a> </li>
+    </ul>
     <main>
       {% block content %}{% endblock %}
     </main>

@@ -11,6 +11,7 @@
         {% endblock %}
     </head>
     <body>
+
         {% for label,messages in app.flashes(['success','error'])%}
             {% for message in messages %}
                 <div class="flash-{{ label }}">
@@ -19,10 +20,13 @@
             {% endfor %}
         {% endfor %}
         <ul>
-            <li> <a href="{{ path("table_create_form") }}"> create user table </a> </li>
-            <li> <a href="{{ path("form") }}"> create user  </a> </li>
-            <li> <a href="{{ path("show_form") }}"> show users </a> </li>
+            <li> <a href="{{ path("e06_main") }}"> home </a> </li>
+            <li> <a href="{{ path("app_create_table") }}"> create user table </a> </li>
+            <li> <a href="{{ path("user_create") }}"> create user  </a> </li>
+            <li> <a href="{{ path("user_show") }}"> show users </a> </li>
         </ul>
         {% block body %}{% endblock %}
     </body>
 </html>
+
+

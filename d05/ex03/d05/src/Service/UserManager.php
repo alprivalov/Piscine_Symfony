@@ -7,18 +7,25 @@ use Doctrine\ORM\EntityManagerInterface;
 class UserManager {
     public function __construct(private EntityManagerInterface $em) {}
     public function saveUser(User $user){
-        if($this->em->getRepository(User::class)->findOneBy([
-            "email"=> $user->getEmail()
-        ]))
-            return "email already exist";
+        try{
 
-        if($this->em->getRepository(User::class)->findOneBy([
-            "username"=> $user->getUsername()
-        ]))
-            return "username already exist";
+            if($this->em->getRepository(User::class)->findOneBy([
+                "email"=> $user->getEmail()
+            ]))
+                return "email already exist";
 
-        $this->em->persist($user);
-        $this->em->flush();
+            if($this->em->getRepository(User::class)->findOneBy([
+                "username"=> $user->getUsername()
+            ]))
+                return "username already exist";
+
+            $this->em->persist($user);
+            $this->em->flush();
+            $this->addFlash( 'success','Success : user create');
+
+        } catch (\Exception $e){
+            $this->addFlash( 'error','Error : user create');
+        }
         return "user created!";
     }
 
